@@ -2,7 +2,7 @@ const connection = require('../database/connection');
 
 module.exports = {
     async index(request, response){
-        const id_usuario = request.headers.autorizar;
+        const id_usuario = response.locals.idUser;
         const {id} = request.params;
         if(id){
             const cartoes = await connection('cartoes')
@@ -46,7 +46,7 @@ module.exports = {
     },
     async create(request, response){
             const {nomeCard, limiteT, diaV, diaF, cor, bandeira_id} = request.body;
-            const usuario_id = request.headers.autorizar;
+            const usuario_id = response.locals.idUser;
             const limiteD = limiteT;
             const visivel = 1;
             await connection('cartoes').insert({
@@ -65,7 +65,7 @@ module.exports = {
 
         async delete(request, response){
             const {id} = request.params;
-            const usuario_id = request.headers.autorizar;
+            const usuario_id = response.locals.idUser;
 
             const cartao = await connection('cartoes')
             .select('usuario_id')
@@ -85,7 +85,7 @@ module.exports = {
 
         async modify(request, response){
             const {id, nomeCard, limiteT, diaV, diaF, cor, bandeira_id} = request.body;
-            const usuario_id = request.headers.autorizar;
+            const usuario_id = response.locals.idUser;
             const cartao = await connection('cartoes')
             .select('usuario_id')
             .where('id', id)

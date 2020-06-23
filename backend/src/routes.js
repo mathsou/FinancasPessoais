@@ -23,7 +23,7 @@ routes.post('/validaUser', validaUserController.index);
 routes.post('/session', sessionController.create);
 routes.post('/usuarios', usuarioController.create);
 
-//routes.use(authMiddleware);
+routes.use(authMiddleware);
 
 routes.get('/usuarios', usuarioController.index);
 routes.get('/cartoes', cartaoController.index);
@@ -42,7 +42,7 @@ routes.post('/bandeira', bandeiraController.create);
 routes.post('/loja', lojaController.create);
 routes.post('/compras', comprasController.create);
 routes.post('/meses', mesesController.create);
-routes.get('/pagarFatura/:fatura', pagarFaturaController.pagar);
+//routes.get('/pagarFatura/:fatura', pagarFaturaController.pagar);
 
 routes.delete('/cartoes/:id', cartaoController.delete);
 routes.delete('/compras/:id', comprasController.delete);

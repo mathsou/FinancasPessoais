@@ -1,5 +1,6 @@
 const connection = require('../database/connection');
 const cripto = require('../functions/cripto');
+const jwt = require('../middlewares/jwt');
 
 module.exports = {
     async create(request, response){
@@ -10,14 +11,13 @@ module.exports = {
             .orWhere('email', '=', user)
             .select([
                 'id',
-                'senha',
-                'nome',
-                'salarioB'])
+                'senha'])
             .first();
 
         if(usuario){
             if(senha == usuario.senha){
-                return response.json(usuario);
+                const token = jwt.sign({idUser: usuario.id})
+                return response.json({usuario, token});
             }
             return response.json({error: 'Senha incorreta'})
         }

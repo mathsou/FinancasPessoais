@@ -2,7 +2,7 @@ const connection = require('../database/connection');
 
 module.exports = {
     async index(request, response){
-        const id = request.headers.autorizar;
+        const id = response.locals.idUser;
         const {cod} = request.params;
         const admin = await connection('usuarios').select('tipoUser_id').where('id', id).first();
         
@@ -19,7 +19,7 @@ module.exports = {
     },
 
     async modify(request, response){
-        const id = request.headers.autorizar;
+        const id = response.locals.idUser;
         const admin = await connection('usuarios').select('tipoUser_id').where('id', id).first();
         if (admin.tipoUser_id == 1){
             const {userName, tipoUser_id} = request.body;

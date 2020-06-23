@@ -2,7 +2,7 @@ const connection = require('../database/connection');
 
 module.exports = {
     async index(request, response){
-        const id_usuario = request.headers.autorizar;
+        const id_usuario = response.locals.idUser;
         const {page = 1} = request.query;
         
         var teste = []
@@ -17,8 +17,7 @@ module.exports = {
         .distinct([
             'faturas.ano',
             'faturas.mes_id',
-            'meses.mes',
-            'paga' 
+            'meses.mes', 
         ]);
         var pagina=(page-1)*6
         var tamanho = mesesAnos.length;
@@ -50,7 +49,6 @@ module.exports = {
                 'faturas.compras_id',
                 'compras.produto',
                 'faturas.valor',
-                'faturas.cartao_id',
                 'cartoes.nomeCard',
                 'faturas.paga'   
             ]);
@@ -60,7 +58,6 @@ module.exports = {
             .join('compras', 'compras.id', '=', 'faturas.compras_id')
             .where('cartoes.usuario_id', '=', id_usuario)
             .distinct('compras.produto', 'compras.id')
-            .orderBy('faturas.cartao_id');
             
             return response.json([faturas, mesesAnos, produtos]);
 
@@ -130,7 +127,7 @@ module.exports = {
     },
 
     async modify(request, response){
-        const id_usuario = request.headers.autorizar;
+        const id_usuario = response.locals.idUser;
         const {mes, ano, cartao_id, fechamento, vencimento} = request.body
 
         const faturas = await connection('faturas')

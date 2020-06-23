@@ -7,7 +7,7 @@ module.exports = {
     },
     async create(request, response){
         const {mes} = request.body;
-        const usuario_id = request.headers.autorizar;
+        const usuario_id = response.locals.idUser;
         const admin = await connection('usuarios').select('tipoUser_id').where('id', usuario_id).first();
         if(admin.tipoUser_id == 1){
             await connection('meses').insert({
@@ -21,7 +21,7 @@ module.exports = {
     async modify(request, response){
         const {mes} = request.body;
         const {id} = request.params;
-        const usuario_id = request.headers.autorizar;
+        const usuario_id = response.locals.idUser;
         const admin = await connection('usuarios').select('tipoUser_id').where('id', usuario_id).first();
         if(admin.tipoUser_id == 1){
             await connection('meses')

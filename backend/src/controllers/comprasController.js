@@ -5,7 +5,7 @@ const faturasController = require('./faturasController');
 module.exports = {
     async index(request, response){
         const {page = 1} = request.query;
-        const id_usuario = request.headers.autorizar;
+        const id_usuario = response.locals.idUser;
         const {id} = request.params;
         if(id){
             const compras = await connection('compras')
@@ -51,7 +51,7 @@ module.exports = {
     },
     async create(request, response){
         const {produto, valor, dataCompra, numParcelas, valorParcelas, loja_id, cartao_id} = request.body;
-        const usuario_id = request.headers.autorizar;
+        const usuario_id = response.locals.idUser;
 
         const [cartao] = await connection('cartoes').where('id', '=', cartao_id).select(['usuario_id', 'limiteD']);
         if (cartao.usuario_id == usuario_id){
@@ -78,7 +78,7 @@ module.exports = {
 
     async delete(request, response){
         const {id} = request.params;
-        const usuario_id = request.headers.autorizar;
+        const usuario_id = response.locals.idUser;
 
         const compra = await connection('compras')
         .select(['usuario_id', 'valor', 'cartao_id'])
@@ -102,7 +102,7 @@ module.exports = {
 
     async modify(request, response){
         const {id, produto, valor, dataCompra, numParcelas, valorParcelas, loja_id, cartao_id} = request.body;
-        const usuario_id = request.headers.autorizar;
+        const usuario_id = response.locals.idUser;
         const compras = await connection('compras')
         .select('usuario_id')
         .where('id', id)

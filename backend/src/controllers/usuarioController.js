@@ -1,10 +1,12 @@
+const jwt = require('../middlewares/jwt');
+
 const connection = require('../database/connection');
 const crypto = require('crypto');
 const cripto = require('../functions/cripto');
 
 module.exports = {
     async index (request, response) {
-        const id = request.headers.autorizar;
+        const id = response.locals.idUser;
         const usuario = await connection('usuarios')
         .select('userName', 'nome', 'email', 'salarioB')
         .where({id: id});
@@ -12,27 +14,28 @@ module.exports = {
         
     },
     async create (request, response){
-        var {userName, nome, email, senha, salarioB} = request.body;
-        console.log(userName, nome, email, senha, salarioB);
+        const {userName, nome, email, senha, salarioB} = request.body;
         const tipoUser_id = 2;
-        senha = cripto.criptografar(senha);
         const id = crypto.randomBytes(8).toString('hex');
         await connection('usuarios').insert({
             id,
             userName,
             nome,
             email,
-            senha,
+            senha: crypto.createHash('md5').update(senha).digest('hex'),
             salarioB,
             tipoUser_id
         }); 
-        return response.json({id});
+        const user = {id, nome, salarioB};
+        const token = jwt.sign({user: user})
+        return response.json({user, token});
+        
     },
 
 
     async modify(request, response){
         var {userName, nome, email, senha, salarioB} = request.body;
-        const id = request.headers.autorizar;
+        const id = response.locals.idUser;
         senha = cripto.criptografar(senha);
         await connection('usuarios')
         .where('id', id)
@@ -40,7 +43,7 @@ module.exports = {
             userName: userName,
             nome: nome,
             email: email,
-            senha:senha,
+            senha: crypto.createHash('md5').update(senha).digest('hex'),
             salarioB: salarioB,
         });
         return response.status(204).send();
