@@ -6,6 +6,7 @@ const routes = express.Router();
 
 const authMiddleware = require('./middlewares/auth');
 
+const autenticacaoController = require('./controllers/autenticacaoController');
 const usuarioController = require('./controllers/usuarioController');
 const cartaoController = require('./controllers/cartaoController');
 const adminController = require('./controllers/adminController');
@@ -25,6 +26,8 @@ routes.post('/usuarios', usuarioController.create);
 
 routes.use(authMiddleware);
 
+routes.get('/autenticacao', autenticacaoController.token);
+
 routes.get('/usuarios', usuarioController.index);
 routes.get('/cartoes', cartaoController.index);
 routes.get('/admin', adminController.index);
@@ -42,7 +45,7 @@ routes.post('/bandeira', bandeiraController.create);
 routes.post('/loja', lojaController.create);
 routes.post('/compras', comprasController.create);
 routes.post('/meses', mesesController.create);
-//routes.get('/pagarFatura/:fatura', pagarFaturaController.pagar);
+routes.get('/pagarFatura/:fatura', pagarFaturaController.pagar);
 
 routes.delete('/cartoes/:id', cartaoController.delete);
 routes.delete('/compras/:id', comprasController.delete);

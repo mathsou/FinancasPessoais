@@ -1,9 +1,11 @@
-export const TOKEN_KEY = "@controle-contas";
-export const isAuthenticated = () => localStorage.getItem(TOKEN_KEY) !== null;
-export const getToken = () => localStorage.getItem(TOKEN_KEY);
-export const login = token => {
-  localStorage.setItem(TOKEN_KEY, token);
-};
-export const logout = () => {
-  localStorage.removeItem(TOKEN_KEY);
+import api from './api';
+
+export const autenticado = () => {
+    const JWT = api.get(`autenticacao`, {
+        headers: {
+            authorization: "Bearer " + localStorage.getItem('JWT'),
+        }
+    })
+    console.log(JWT);
+
 };

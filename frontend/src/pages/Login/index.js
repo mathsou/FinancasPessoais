@@ -19,14 +19,8 @@ export default function Login(){
     const manterConectado = localStorage.getItem('manterConectado');
     
     useEffect(() => {
-        console.log(manterConectado);
-        if(manterConectado === "true"){
-            history.push('/profile'); 
-        }
-        else{
-            localStorage.clear();
-        }
-    }, [manterConectado, history]);
+    localStorage.clear();
+    }, [history]);
 
     function mostraSenha(){
         if(mSenha){
@@ -56,17 +50,7 @@ export default function Login(){
                 alert(response.data.error);
             }
             else{
-                localStorage.setItem('Id', response.data.id);
-                localStorage.setItem('Nome', response.data.nome);
-                localStorage.setItem('salarioB', response.data.salarioB);
-                if(conectado){
-                    localStorage.setItem('manterConectado', true);
-                }
-                else{
-                    localStorage.setItem('manterConectado', false);
-                }
-                
-
+                localStorage.setItem('JWT', response.data.token);
                 history.push('/profile');
             }
             

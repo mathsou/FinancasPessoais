@@ -13,8 +13,8 @@ var cont = 0;
 var key;
 export default function Profile(){
     var atualiza = true;
-    const idUser = localStorage.getItem('Id');
-    const [page, setPage] = useState(1)
+    const token = "Bearer " + localStorage.getItem('JWT');
+    const [page, setPage] = useState(1);
     const [faturas, setFaturas] = useState([]);
     const [mesesAnos, setMesesAnos] = useState([]);
     const [produtos, setProdutos] = useState([]);
@@ -22,7 +22,7 @@ export default function Profile(){
     useEffect(() => {
         api.get(`faturas?page=${page}`, {
             headers: {
-                autorizar: idUser,
+                authorization: token,
             }
         }).then(response => {
             if(response.data.length!==0){
@@ -36,7 +36,7 @@ export default function Profile(){
             }
         })
         cont=0;
-    }, [idUser, page, atualiza])
+    }, [token, page, atualiza])
 
     const Coluna = ({idCompra, idFatura, valor, ano, mes}) => {
         var i = []
@@ -92,7 +92,7 @@ export default function Profile(){
         try {
             await api.get(`pagarFatura/${data}`, {
                 headers:{
-                    autorizar: idUser,
+                authorization: token,
                 }
             });
             setPage(atualiza=!atualiza);

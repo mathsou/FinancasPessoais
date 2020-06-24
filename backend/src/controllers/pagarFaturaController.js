@@ -1,11 +1,11 @@
 const connection = require('../database/connection');
 
 module.exports = {
-    async create(request, response){
-        const {fatura} = request.query;
+    async pagar(request, response){
+        const {fatura} = request.params;
         const id_usuario = response.locals.idUser;
-        const mes = parseInt(fatura.slice(0,2));
-        const ano = parseInt(fatura.slice(2));
+        const mes = parseInt(fatura.slice(4));
+        const ano = parseInt(fatura.slice(0, 4));
         const cartoes = await connection('faturas')
             .join('cartoes', 'cartoes.id', '=', 'faturas.cartao_id')
             .where('cartoes.usuario_id', '=', id_usuario)
@@ -31,4 +31,4 @@ module.exports = {
         }
         return response.status(204).send()
     }
-}
+} 

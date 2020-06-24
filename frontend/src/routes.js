@@ -1,7 +1,7 @@
 import React from 'react';
 import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
 
-import {autenticado} from './auth';
+import {autenticado} from './services/auth';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -29,13 +29,13 @@ export default function Routes(){
             <Switch>
                 <Route path="/" exact component={Login}/>
                 <Route path="/register" exact component={Register}/>
-                <Route path="/profile" exact component={Profile}/>
-                <Route path="/profile/cartoes" exact component={Cartoes}/>
-                <Route path="/profile/cartoes/novoCartao" exact component={novoCartao}/>
-                <Route path="/profile/cartoes/editaCartao" exact component={editaCartao}/>
-                <Route path="/profile/compras" exact component={Compras}/>
-                <Route path="/profile/compras/novaCompra" exact component={novaCompra}/>
-                <Route path="/profile/compras/editaCompra" exact component={editaCompra}/>
+                <PrivateRoute path="/profile" exact component={Profile}/>
+                <PrivateRoute path="/profile/cartoes" exact component={Cartoes}/>
+                <PrivateRoute path="/profile/cartoes/novoCartao" exact component={novoCartao}/>
+                <PrivateRoute path="/profile/cartoes/editaCartao" exact component={editaCartao}/>
+                <PrivateRoute path="/profile/compras" exact component={Compras}/>
+                <PrivateRoute path="/profile/compras/novaCompra" exact component={novaCompra}/>
+                <PrivateRoute path="/profile/compras/editaCompra" exact component={editaCompra}/>
             </Switch>
         </BrowserRouter>
     );
