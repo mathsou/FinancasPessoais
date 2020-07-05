@@ -24,6 +24,10 @@ routes.post('/validaUser', validaUserController.index);
 routes.post('/session', sessionController.create);
 routes.post('/usuarios', usuarioController.create);
 
+routes.get('/bandeira', bandeiraController.index);
+routes.get('/loja', lojaController.index);
+routes.get('/meses', mesesController.index);
+
 routes.use(authMiddleware);
 
 routes.get('/autenticacao', autenticacaoController.token);
@@ -31,11 +35,8 @@ routes.get('/autenticacao', autenticacaoController.token);
 routes.get('/usuarios', usuarioController.index);
 routes.get('/cartoes', cartaoController.index);
 routes.get('/admin', adminController.index);
-routes.get('/bandeira', bandeiraController.index);
-routes.get('/loja', lojaController.index);
 routes.get('/compras', comprasController.index);
 routes.get('/faturas', faturasController.index);
-routes.get('/meses', mesesController.index);
 routes.get('/cartoes/:id', cartaoController.index);
 routes.get('/admin/:cod', adminController.index);
 routes.get('/compras/:id', comprasController.index);

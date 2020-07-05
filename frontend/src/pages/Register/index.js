@@ -72,7 +72,8 @@ export default function Register(){
     
 
     async function validacaoUsuario(){
-        const user = await api.post('/validaUser', {userName});
+        const user = await api.post('/validaUser', {"userName": userName});
+        
         if(user.data.userName === userName){
             document.getElementById("nome").style.marginTop = '23px';
 
@@ -104,14 +105,13 @@ export default function Register(){
 
     async function handleRegister(e){
         e.preventDefault();
-        setSalarioB(mask.removeMascara(salarioB));
         if(okUser && okSenha){
             const data = {
                 userName,
                 nome,
                 email,
                 senha,
-                salarioB
+                salarioB: mask.removeMascara(salarioB)
             };
             try {
                 await api.post('usuarios', data);

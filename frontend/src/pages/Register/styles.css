@@ -39,13 +39,16 @@
 .register-container .form {
     margin-right: 80px;
 }
-
+.register-container .form form {
+    max-width: 400px;
+}
 .register-container .form form input, .button {
     min-width: 200px;
     max-width: 400px;
     float: right;
     margin-bottom: 5px;
 }
+
 
 .register-container .form form #nome {
     margin-top: 40px;

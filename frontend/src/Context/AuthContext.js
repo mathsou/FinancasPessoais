@@ -22,10 +22,16 @@ function AuthProvider({children}){
     async function handleLogin(login){
         const {data: {token}} = await api.post('session', login);
 
-        localStorage.setItem('token', token);
-        api.defaults.headers.authorization = `Bearer ${token}`;
-        setAuthenticated(true);
-        history.push('/profile');        
+        
+        if(token){
+            localStorage.setItem('token', token);
+            api.defaults.headers.authorization = `Bearer ${token}`;
+            setAuthenticated(true);
+            history.push('/profile');
+        } 
+        else{
+            alert("Usuário não encontrado");
+        }       
         
     }
 

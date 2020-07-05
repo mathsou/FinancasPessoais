@@ -25,13 +25,14 @@ export default function Cartoes(){
 
     const [bandeiras, setBandeiras] = useState(['']);
     
-    useEffect(() => {
-        api.get('bandeira').then(response => {
-            setBandeiras(response.data);
-        } )
-    }, [])
+    
 
     useEffect(() => {
+        api.get('bandeira').then(response => {
+            setBandeiras(response.data)
+        });
+            
+
         codigoCor = hexCor.formataCor(cores, brilho);
         document.getElementById("cartao").style.background = `${codigoCor[0]}`;
         document.documentElement.style.setProperty('--corBrilho', codigoCor[0]);

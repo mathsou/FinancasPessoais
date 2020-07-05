@@ -22,8 +22,10 @@ export default function Cabecalho(){
     useEffect(() => {
         api.get('/usuarios')
         .then(response => {
-            setNome(response.data[0].nome);
-            setSalarioB(response.data[0].salarioB);
+            if(response.data.length > 0){
+                setNome(response.data[0].nome);
+                setSalarioB(response.data[0].salarioB);
+            }
         });
     }, [])  
 

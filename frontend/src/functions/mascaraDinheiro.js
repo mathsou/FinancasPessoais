@@ -1,7 +1,6 @@
 
 module.exports = {
     mascaraDinheiro(valor){
-        //console.log(valor)
         var valorInicial = valor;
         if(String(valor).indexOf('R$') === 0) {
             if(String(valor).length === 6 && String(valor).indexOf('0,0') === 3){

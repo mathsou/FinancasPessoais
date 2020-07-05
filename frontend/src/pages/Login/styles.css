@@ -51,6 +51,7 @@ h1 {
 
 .login-container section.form form {
     align-items: center;
+    float: right;
 }
 .login-container section.form form p {
     font-size: 1px;
@@ -79,10 +80,11 @@ h1 {
 .login-container section.form a:hover {
     opacity: 0.8;
 }
+
 .login-container .form form #eyeOffSenha {
-    position: absolute;
-    top: 396px;
-    right: 90px;
+    position: relative;
+    top: -45px;
+    left: 310px;
     cursor: pointer;
     transition: .2s;
 }
@@ -92,9 +94,9 @@ h1 {
 }
 
 .login-container .form form #eyeSenha {
-    position: absolute;
-    top: 396px;
-    right: 90px;
+    position: relative;
+    top: -45px;
+    left: 310px;
     cursor: pointer;
     transition: .2s;
 }

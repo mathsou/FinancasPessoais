@@ -83,8 +83,6 @@ export default function Login(){
                             style={{display: 'none'}}
                         />
                     
-                    <input id="conectado" type="checkbox" name="conectado" onClick={() =>{conectado = !conectado}}/>
-                    <label htmlFor="conectado">Manter Conectado</label>
                     <button className="button" type="button" onClick={() => handleLogin({user, senha})}>Entrar</button><p>.</p>
                     
                     <Link to="/register">

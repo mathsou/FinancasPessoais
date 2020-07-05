@@ -2,7 +2,6 @@ const jwt = require('../middlewares/jwt');
 
 const connection = require('../database/connection');
 const crypto = require('crypto');
-const cripto = require('../functions/cripto');
 
 module.exports = {
     async index (request, response) {
@@ -36,7 +35,6 @@ module.exports = {
     async modify(request, response){
         var {userName, nome, email, senha, salarioB} = request.body;
         const id = response.locals.idUser;
-        senha = cripto.criptografar(senha);
         await connection('usuarios')
         .where('id', id)
         .update({
