@@ -9,7 +9,7 @@ export default function Menu(){
                         <li><Link to="/profile">INÍCIO</Link></li>
                         <li><Link to="/profile/cartoes">CARTÕES</Link></li>
                         <li><Link to="/profile/compras">COMPRAS</Link></li>
-                        <li><Link to="/profile/simulacoes">SIMULAÇÕES</Link></li>
+                        {/* <li><Link to="/profile/simulacoes">SIMULAÇÕES</Link></li> */}
                     </ul>
                 </div>
     );
