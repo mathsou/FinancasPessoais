@@ -1,26 +1,32 @@
-import React, {useState} from 'react';
+import React, {useState, useContext, useEffect} from 'react';
 import logo from '../../assets/logo.png';
 import usuario from '../../assets/usuario.png';
-import {Link, useHistory} from 'react-router-dom';
-import {FiSettings} from 'react-icons/fi';
+// import {FiSettings} from 'react-icons/fi';
 import Modal from 'react-modal';
 
+import {Context} from '../../Context/AuthContext';
+
 import './style.css'
+import api from '../../services/api';
 
 Modal.setAppElement('#root');
 
 
 export default function Cabecalho(){
-    const nome = localStorage.getItem('Nome');
-    const salarioB = localStorage.getItem('salarioB');    
-    const history = useHistory();
     const [modalIsOpen, setModalIsOpen] = useState(false);
+    const {handleLogout} = useContext(Context);
 
-    
-    function handleLogOut(){
-        localStorage.clear();
-        history.push('/');
-    }
+    const [nome, setNome] = useState('');
+    const [salarioB, setSalarioB] = useState(0.0);
+
+    useEffect(() => {
+        api.get('/usuarios')
+        .then(response => {
+            setNome(response.data[0].nome);
+            setSalarioB(response.data[0].salarioB);
+        });
+    }, [])  
+
     return(
         <header>
                 <img src={logo} alt="Logo" id="logo"/>
@@ -35,17 +41,17 @@ export default function Cabecalho(){
                           backgroundColor: 'rgba(0, 0, 0, 0.8)'
                         }}}
                     >
-                    <img src={usuario} alt="Logo" id="user"/><br/>
+                    <button className="unvisible" onClick={() => setModalIsOpen(false)}><img src={usuario} alt="Logo" id="user"/></button><br/>
                     <h1>{nome}</h1><br/>
                     <ul>
                         <li>
-                            <Link to="/profile/settings">
+                            {/* <Link to="/profile/settings">
                                 <FiSettings size={20} color="#fff" />
                                 Configurações
-                            </Link>
+                            </Link> */}
                         </li>
                         <li><p>Salário Bruto<br/>{Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(salarioB)}</p></li>
-                        <li><h2 onClick={handleLogOut}>Desconectar</h2></li>
+                        <li><h2 onClick={handleLogout}>Desconectar</h2></li>
                     </ul>                    
                 </Modal>
             </header>

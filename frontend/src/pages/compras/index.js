@@ -11,29 +11,17 @@ import { Link } from 'react-router-dom';
 
 
 export default function Compras() {
-    const idUser = localStorage.getItem('Id');
-    //const [meses, setMeses] = useState([]);
     const [compras, setCompras] = useState([]);
 
     useEffect(() => {
-        // api.get('meses').then(response => {
-        //     setMeses(response.data);
-        // })
-        api.get('compras', {
-            headers: {
-                autorizar: idUser
-            }
-        }).then(response => {
+        api.get('compras')
+            .then(response => {
             setCompras(response.data);
         })
-    }, [idUser]);
+    }, []);
     async function handleDeletaCompra(id){
         try {
-            await api.delete(`compras/${id}`, {
-                headers:{
-                    autorizar: idUser,
-                }
-            });
+            await api.delete(`compras/${id}`);
         }
         catch(err) {
 

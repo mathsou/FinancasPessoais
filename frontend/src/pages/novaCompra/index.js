@@ -11,7 +11,6 @@ import './styles.css';
 export default function Cartoes(){
 
     const history = useHistory();
-    const idUser = localStorage.getItem('Id');
 
     const [produto, setProduto] = useState('');
     const [valorCompra, setValorCompra] = useState('');
@@ -28,14 +27,11 @@ export default function Cartoes(){
         api.get('loja').then(response => {
             setLojas(response.data);
         });
-        api.get('cartoes', {
-            headers: {
-                autorizar: idUser,
-            }
-        }).then(response => {
-            setCartoes(response.data);
+        api.get('cartoes')
+            .then(response => {
+                setCartoes(response.data);
         })
-    }, [idUser])
+    }, [])
 
     useEffect(() => {
         if(numParcelas !== '' && valorCompra !== ''){
@@ -64,11 +60,7 @@ export default function Cartoes(){
                 cartao_id
         };
             try {
-                await api.post('compras', data, {
-                    headers: {
-                        autorizar: idUser
-                    }
-                });
+                await api.post('compras', data);
                 alert("Compra registrada com sucesso!");
                 
             }

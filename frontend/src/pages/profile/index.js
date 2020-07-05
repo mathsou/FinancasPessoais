@@ -1,42 +1,36 @@
 import React, {useEffect, useState} from 'react';
 import {FiArrowLeftCircle, FiArrowRightCircle} from 'react-icons/fi';
-//import {useHistory} from 'react-router-dom';
+
 
 
 import './styles.css';
 import Header from '../cabecalho';
 import Menu from '../menu';
 import api from '../../services/api';
-import { Link } from 'react-router-dom';
 
 var cont = 0;
-var key;
 export default function Profile(){
-    var atualiza = true;
-    const token = "Bearer " + localStorage.getItem('JWT');
+    
+    const [atualiza, setAtualiza] = useState(false);
     const [page, setPage] = useState(1);
     const [faturas, setFaturas] = useState([]);
     const [mesesAnos, setMesesAnos] = useState([]);
     const [produtos, setProdutos] = useState([]);
     
     useEffect(() => {
-        api.get(`faturas?page=${page}`, {
-            headers: {
-                authorization: token,
-            }
-        }).then(response => {
-            if(response.data.length!==0){
-                console.log(response.data)
-                setFaturas(response.data[0]);
-                setMesesAnos(response.data[1]);
-                setProdutos(response.data[2]);
-            }
-            else if(page>1){
-                setPage(page-1);
-            }
+        api.get(`faturas?page=${page}`)
+            .then(response => {
+                if(response.data.length!==0){
+                    setFaturas(response.data[0]);
+                    setMesesAnos(response.data[1]);
+                    setProdutos(response.data[2]);
+                }
+                else if(page>1){
+                    setPage(page-1);
+                }
         })
         cont=0;
-    }, [token, page, atualiza])
+    }, [page, atualiza])
 
     const Coluna = ({idCompra, idFatura, valor, ano, mes}) => {
         var i = []
@@ -75,7 +69,6 @@ export default function Profile(){
         var somando=0;
         faturas.map(total => {
             if(ano === total.ano && mes === total.mes_id){
-                console.log(somando)
                 somando+=total.valor;
             }
         })
@@ -88,14 +81,9 @@ export default function Profile(){
         }
 
         const data = String(ano)+String(mes);
-        console.log(data)
         try {
-            await api.get(`pagarFatura/${data}`, {
-                headers:{
-                authorization: token,
-                }
-            });
-            setPage(atualiza=!atualiza);
+            await api.get(`pagarFatura/${data}`);
+            setAtualiza(!atualiza);
         }
         catch(err) {
 
@@ -178,12 +166,8 @@ export default function Profile(){
                         </tbody>
                     </table>
                     <div className="setas">
-                        <Link onClick={() => {handleTrocaPagina(0)}}>
-                                <FiArrowLeftCircle size={20} color="#000"></FiArrowLeftCircle>
-                        </Link>
-                        <Link onClick={() => {handleTrocaPagina(1)}}>
-                                <FiArrowRightCircle size={20} color="#000"></FiArrowRightCircle>
-                        </Link>
+                        <FiArrowLeftCircle onClick={() => {handleTrocaPagina(0)}} size={20} color="#000"></FiArrowLeftCircle>
+                        <FiArrowRightCircle onClick={() => {handleTrocaPagina(1)}} size={20} color="#000"></FiArrowRightCircle>
                     </div>
                     </div>                    
                 </section>

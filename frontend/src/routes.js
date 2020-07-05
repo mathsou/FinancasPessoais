@@ -1,7 +1,7 @@
-import React from 'react';
-import {BrowserRouter, Route, Switch, Redirect} from 'react-router-dom';
+import React, {useContext} from 'react';
+import {Route, Switch, Redirect} from 'react-router-dom';
 
-import {autenticado} from './services/auth';
+import {Context} from './Context/AuthContext';
 
 import Login from './pages/Login';
 import Register from './pages/Register';
@@ -13,30 +13,27 @@ import editaCartao from './pages/editaCartao';
 import novaCompra from './pages/novaCompra';
 import editaCompra from './pages/editaCompra';
 
-const PrivateRoute = ({component: Component, ...rest}) => (
-    <Route {...rest} render={props => (
-        autenticado() ? (
-            <Component {...props}/>
-        ) : (
-            <Redirect to={{pathname: '/', state: {from: props.location}}}/>
-        )
-    )}/>
-);
+function CustomRoute ({isPrivate, ...rest}){
+    const {authenticated} = useContext(Context);
+    if(isPrivate && !authenticated){
+        return <Redirect to='/'/>
+    }
+
+    return <Route {...rest}/>;
+}
 
 export default function Routes(){
     return (
-        <BrowserRouter>
             <Switch>
-                <Route path="/" exact component={Login}/>
-                <Route path="/register" exact component={Register}/>
-                <PrivateRoute path="/profile" exact component={Profile}/>
-                <PrivateRoute path="/profile/cartoes" exact component={Cartoes}/>
-                <PrivateRoute path="/profile/cartoes/novoCartao" exact component={novoCartao}/>
-                <PrivateRoute path="/profile/cartoes/editaCartao" exact component={editaCartao}/>
-                <PrivateRoute path="/profile/compras" exact component={Compras}/>
-                <PrivateRoute path="/profile/compras/novaCompra" exact component={novaCompra}/>
-                <PrivateRoute path="/profile/compras/editaCompra" exact component={editaCompra}/>
+                <CustomRoute path="/" exact component={Login}/>
+                <CustomRoute path="/register" exact component={Register}/>
+                <CustomRoute isPrivate path="/profile" exact component={Profile}/>
+                <CustomRoute isPrivate path="/profile/cartoes" exact component={Cartoes}/>
+                <CustomRoute isPrivate path="/profile/cartoes/novoCartao" exact component={novoCartao}/>
+                <CustomRoute isPrivate path="/profile/cartoes/editaCartao" exact component={editaCartao}/>
+                <CustomRoute isPrivate path="/profile/compras" exact component={Compras}/>
+                <CustomRoute isPrivate path="/profile/compras/novaCompra" exact component={novaCompra}/>
+                <CustomRoute isPrivate path="/profile/compras/editaCompra" exact component={editaCompra}/>
             </Switch>
-        </BrowserRouter>
     );
 }

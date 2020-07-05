@@ -35,7 +35,7 @@ header button img.user {
 
 }
 
-header button.unvisible {
+.unvisible {
     background-color: transparent;
     border: none;
     

@@ -18,6 +18,7 @@ module.exports = {
             'faturas.ano',
             'faturas.mes_id',
             'meses.mes', 
+            'faturas.paga'
         ]);
         var pagina=(page-1)*6
         var tamanho = mesesAnos.length;

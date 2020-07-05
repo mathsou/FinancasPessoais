@@ -16,7 +16,6 @@ var codigoCor, cor;
 
 export default function Cartoes(){
     const history = useHistory();
-    const idUser = localStorage.getItem('Id');
 
     var url = window.location.href;
     var idCartao = url.split('?');
@@ -47,22 +46,19 @@ export default function Cartoes(){
             setBandeiras(response.data);
         });
         
-        api.get(`cartoes/${id}`, {
-            headers:{
-                autorizar: idUser
-            }
-        }).then(response => {
-            cartoes = response.data[0]
-            setNomeCard(cartoes.nomeCard)
-            setlimiteTotal(mask.mascaraDinheiro(cartoes.limiteT+"00"))
-            setDiaF(cartoes.diaF)
-            setDiaV(cartoes.diaV)
-            setBandeiraId(cartoes.bandeira_id)
-            cor = cartoes.cor;
-            document.getElementById("cartao").style.background = `${cartoes.cor}`;
+        api.get(`cartoes/${id}`)
+            .then(response => {
+                cartoes = response.data[0]
+                setNomeCard(cartoes.nomeCard)
+                setlimiteTotal(mask.mascaraDinheiro(cartoes.limiteT+"00"))
+                setDiaF(cartoes.diaF)
+                setDiaV(cartoes.diaV)
+                setBandeiraId(cartoes.bandeira_id)
+                cor = cartoes.cor;
+                document.getElementById("cartao").style.background = `${cartoes.cor}`;
         })
 
-    }, [])
+    }, [cartoes])
 
 
     async function handleEditaCartao(e){
@@ -81,11 +77,7 @@ export default function Cartoes(){
        };
        console.log(data)
         try {
-            await api.put('cartoes/', data, {
-                headers: {
-                    autorizar: idUser
-                }
-            });
+            await api.put('cartoes/', data);
             alert("Cartão alterado com sucesso!");
             
         }

@@ -11,7 +11,6 @@ import './styles.css';
 export default function Cartoes(){
 
     const history = useHistory();
-    const idUser = localStorage.getItem('Id');
 
     var url = window.location.href;
     var idCartao = url.split('?');
@@ -44,28 +43,22 @@ export default function Cartoes(){
         api.get('loja').then(response => {
             setLojas(response.data);
         });
-        api.get('cartoes', {
-            headers: {
-                autorizar: idUser,
-            }
-        }).then(response => {
-            setCartoes(response.data);
+        api.get('cartoes')
+            .then(response => {
+                setCartoes(response.data);
         })
-        api.get(`compras/${id}`, {
-            headers: {
-                autorizar: idUser
-            }
-        }).then(response => {
-            var compras = response.data[0];
-            setProduto(compras.produto);
-            setValorCompra(Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(compras.valor));
-            setDataCompra(compras.dataCompra);
-            setNumParcelas(compras.numParcelas);
-            setValorParc(Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(compras.valorParcelas));
-            setLojaId(compras.loja_id);
-            setCartaoId(compras.cartao_id);
+        api.get(`compras/${id}`)
+            .then(response => {
+                var compras = response.data[0];
+                setProduto(compras.produto);
+                setValorCompra(Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(compras.valor));
+                setDataCompra(compras.dataCompra);
+                setNumParcelas(compras.numParcelas);
+                setValorParc(Intl.NumberFormat('pt-BR', {style: 'currency', currency: 'BRL'}).format(compras.valorParcelas));
+                setLojaId(compras.loja_id);
+                setCartaoId(compras.cartao_id);
         })
-    }, [idUser, id])
+    }, [id])
 
     
     async function handleEditaCompra(e){
@@ -84,11 +77,7 @@ export default function Cartoes(){
                 cartao_id
         };
             try {
-                await api.put('compras', data, {
-                    headers: {
-                        autorizar: idUser
-                    }
-                });
+                await api.put('compras', data);
                 alert("Compra alterada com sucesso!");
                 
             }

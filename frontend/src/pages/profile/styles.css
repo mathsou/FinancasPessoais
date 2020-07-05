@@ -42,13 +42,13 @@
     margin-top: 20px;
 }
 
-.profile-container section .table .setas a{
+.profile-container section .table .setas svg{
     margin-left: 10px;
     margin-right: 10px;
     transition: .2s;
 }
 
-.profile-container section .table .setas a:hover{
+.profile-container section .table .setas svg:hover{
     opacity: .6;
 }
 

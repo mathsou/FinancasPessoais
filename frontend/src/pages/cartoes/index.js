@@ -13,14 +13,12 @@ Modal.setAppElement('#root');
 
 export default function Cartoes(){
     const idUser = localStorage.getItem('Id');
+    console.log(idUser);
     const [cartoes, setCartoes] = useState([]);
     
     useEffect(() => {
-        api.get('cartoes', {
-            headers: {
-                autorizar: idUser,
-            }
-        }).then(response => {
+        api.get('cartoes')
+            .then(response => {
             setCartoes(response.data);
         })
     }, [idUser])

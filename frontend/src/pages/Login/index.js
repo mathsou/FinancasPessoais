@@ -1,8 +1,8 @@
-import React, {useState, useEffect} from 'react';
-import {Link, useHistory} from 'react-router-dom';
+import React, {useState, useContext} from 'react';
+import {Link} from 'react-router-dom';
 import { FiLogIn, FiEyeOff, FiEye } from 'react-icons/fi';
+import {Context} from '../../Context/AuthContext';
 
-import api from '../../services/api'
 import './styles.css';
 
 import titulo from '../../assets/name.svg'
@@ -11,16 +11,13 @@ import logo from '../../assets/logo.png'
 var mSenha = false;
 
 export default function Login(){
-    const history = useHistory();
+    const {authenticated, handleLogin} = useContext(Context)
     
+    console.debug('login', authenticated)
     const [user, setUser] = useState('');
     const [senha, setSenha] = useState('');
     var conectado = false;
-    const manterConectado = localStorage.getItem('manterConectado');
-    
-    useEffect(() => {
-    localStorage.clear();
-    }, [history]);
+
 
     function mostraSenha(){
         if(mSenha){
@@ -38,27 +35,6 @@ export default function Login(){
             mSenha = !mSenha
         }
     }
-    async function handleLogin(e){
-        e.preventDefault();
-        const data = {
-            user,
-            senha,
-        };
-        try{
-            const response = await api.post('session', data);
-            if(response.data.error){
-                alert(response.data.error);
-            }
-            else{
-                localStorage.setItem('JWT', response.data.token);
-                history.push('/profile');
-            }
-            
-        }
-        catch(err){
-            alert("falha no login, tente novamente")
-        }
-    }
 
     return (
         <div className="login-container">
@@ -74,7 +50,7 @@ export default function Login(){
             
 
             <section className="form">
-                <form onSubmit={handleLogin}>
+                <form>
                     <input 
                         id="user"
                         type="text" 
@@ -109,7 +85,7 @@ export default function Login(){
                     
                     <input id="conectado" type="checkbox" name="conectado" onClick={() =>{conectado = !conectado}}/>
                     <label htmlFor="conectado">Manter Conectado</label>
-                    <button className="button" type="submit">Entrar</button><p>.</p>
+                    <button className="button" type="button" onClick={() => handleLogin({user, senha})}>Entrar</button><p>.</p>
                     
                     <Link to="/register">
                     <FiLogIn id="registrar" size={16} color="#336EC6"/>

@@ -14,7 +14,7 @@ var codigoCor = [];
 export default function Cartoes(){
 
     const history = useHistory();
-    const idUser = localStorage.getItem('Id');
+    
     const [nomeCard, setNomeCard] = useState('');
     const [limiteTotal, setlimiteTotal] = useState('');
     const [diaF, setDiaF] = useState('');
@@ -53,11 +53,7 @@ export default function Cartoes(){
             bandeira_id
        };
         try {
-            await api.post('cartoes', data, {
-                headers: {
-                    autorizar: idUser
-                }
-            });
+            await api.post('cartoes', data);
             alert("Cartão criado com sucesso!");
             
         }
