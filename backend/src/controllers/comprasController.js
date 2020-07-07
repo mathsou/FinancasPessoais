@@ -89,8 +89,9 @@ module.exports = {
             const [cartao] = await connection('cartoes').where('id', '=', compra.cartao_id).select('limiteD');
             var limiteD = cartao.limiteD+compra.valor;
             await connection('cartoes').where('id', '=', compra.cartao_id).update({limiteD: limiteD});
-
             await connection('compras').where('id', '=', id).del();
+            faturasController.delete(id);
+
             return response.status(204).send();
             
         }

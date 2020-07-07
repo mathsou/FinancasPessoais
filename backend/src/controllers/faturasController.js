@@ -5,8 +5,6 @@ module.exports = {
         const id_usuario = response.locals.idUser;
         const {page = 1} = request.query;
         
-        var teste = []
-
         const mesesAnos = await connection('faturas')
         .join('meses', 'meses.id', '=', 'faturas.mes_id')
         .join('cartoes', 'cartoes.id', '=', 'faturas.cartao_id')

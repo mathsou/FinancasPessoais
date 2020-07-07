@@ -16,7 +16,6 @@ export default function Login(){
     console.debug('login', authenticated)
     const [user, setUser] = useState('');
     const [senha, setSenha] = useState('');
-    var conectado = false;
 
 
     function mostraSenha(){
@@ -33,6 +32,13 @@ export default function Login(){
 
             document.getElementById('senha').type = 'text';
             mSenha = !mSenha
+        }
+    }
+
+    function enter(e){
+        var tecla = e.key;
+        if(tecla === 'Enter'){
+            handleLogin({user, senha})
         }
     }
 
@@ -57,6 +63,7 @@ export default function Login(){
                         placeholder="Nome de usuario ou E-mail" 
                         value={user}
                         onChange={e => setUser(e.target.value)}
+                        onKeyPress={enter}
                         required
                         autoFocus
                     />
@@ -66,6 +73,7 @@ export default function Login(){
                         placeholder="Senha"
                         value={senha}
                         onChange={e => setSenha(e.target.value)}
+                        onKeyPress={enter}
                         required
                     />
                     <FiEyeOff

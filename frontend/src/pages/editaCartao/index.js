@@ -20,7 +20,6 @@ export default function Cartoes(){
     var url = window.location.href;
     var idCartao = url.split('?');
     var id = parseInt(idCartao[1]);
-    var cartoes;
 
     const [nomeCard, setNomeCard] = useState('');
     const [limiteTotal, setlimiteTotal] = useState('');
@@ -48,28 +47,26 @@ export default function Cartoes(){
         
         api.get(`cartoes/${id}`)
             .then(response => {
-                cartoes = response.data[0]
-                setNomeCard(cartoes.nomeCard)
-                setlimiteTotal(mask.mascaraDinheiro(cartoes.limiteT+"00"))
-                setDiaF(cartoes.diaF)
-                setDiaV(cartoes.diaV)
-                setBandeiraId(cartoes.bandeira_id)
-                cor = cartoes.cor;
-                document.getElementById("cartao").style.background = `${cartoes.cor}`;
+                setNomeCard(response.data[0].nomeCard)
+                setlimiteTotal(mask.mascaraDinheiro(response.data[0].limiteT+"00"))
+                setDiaF(response.data[0].diaF)
+                setDiaV(response.data[0].diaV)
+                setBandeiraId(response.data[0].bandeira_id)
+                cor = response.data[0].cor;
+                document.getElementById("cartao").style.background = `${response.data[0].cor}`;
         })
 
-    }, [cartoes])
+    }, [id])
 
 
     async function handleEditaCartao(e){
         e.preventDefault();
-        var limiteT = mask.removeMascara(limiteTotal);
         const bandeira_id = bandeiraId; 
         if(bandeiraId !== '0'){
         const data = {
             id,
             nomeCard,
-            limiteT,
+            limiteT: mask.removeMascara(limiteTotal),
             diaF,
             diaV,
             cor,
