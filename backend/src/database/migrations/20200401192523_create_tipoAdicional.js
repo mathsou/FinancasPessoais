@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-    return knex.schema.createTable('tipoAdicional', function(table) {
+    return knex.schema.createTable('tipoadicional', function(table) {
         table.increments('id').primary();
         table.string('nome').notNullable();
 

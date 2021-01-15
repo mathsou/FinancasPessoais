@@ -1,5 +1,5 @@
 exports.up = function(knex) {
-    return knex.schema.createTable('horaExtra', function(table) {
+    return knex.schema.createTable('horaextra', function(table) {
         table.increments('id').primary();
         table.decimal('numHoras').notNullable();
         table.decimal('porcentagem').notNullable();

@@ -8,6 +8,8 @@ exports.up = function(knex) {
         table.integer('mes_id').notNullable();
         table.integer('compras_id').notNullable();
         table.boolean('paga').notNullable();
+        table.integer('fechamento');
+        table.integer('vencimento');
         
         table.foreign('cartao_id').references('id').inTable('cartoes').onDelete('CASCADE').onUpdate('CASCADE');
         table.foreign('mes_id').references('id').inTable('meses');

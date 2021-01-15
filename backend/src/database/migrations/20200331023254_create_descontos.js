@@ -8,7 +8,7 @@ exports.up = function(knex) {
         table.integer('tipoDesconto_id').notNullable();
 
         table.foreign('usuario_id').references('id').inTable('usuarios').onDelete('CASCADE').onUpdate('CASCADE');
-        table.foreign('tipoDesconto_id').references('id').inTable('tipoDesconto').onUpdate('CASCADE');
+        table.foreign('tipoDesconto_id').references('id').inTable('tipodesconto').onUpdate('CASCADE');
       })
 };
 

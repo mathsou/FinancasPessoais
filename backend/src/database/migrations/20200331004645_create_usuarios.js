@@ -8,7 +8,7 @@ exports.up = function(knex) {
         table.decimal('salarioB').notNullable();
         
         table.integer('tipoUser_id').notNullable();
-        table.foreign('tipoUser_id').references('id').inTable('tipoUser');
+        table.foreign('tipoUser_id').references('id').inTable('tipouser');
       })
 };
 
