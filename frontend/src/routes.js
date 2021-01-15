@@ -7,7 +7,7 @@ import Login from './pages/Login';
 import Register from './pages/Register';
 import Profile from './pages/profile';
 import Cartoes from './pages/cartoes';
-import Compras from './pages/compras';
+import Compras from './pages/compras'; 
 import novoCartao from './pages/novoCartao';
 import editaCartao from './pages/editaCartao';
 import novaCompra from './pages/novaCompra';
