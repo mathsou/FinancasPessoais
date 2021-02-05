@@ -27,7 +27,6 @@ module.exports = {
         }); 
         const user = {id, nome, salarioB};
         const token = jwt.sign({user: user})
-        console.log(userName)
         return response.json({user, token});
         
     },

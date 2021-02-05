@@ -9,8 +9,8 @@ exports.up = function(knex) {
         table.string('cor', 7).notNullable();
         table.boolean('visivel').notNullable();
 
-        table.string('usuario_id').notNullable();
-        table.integer('bandeira_id').notNullable();
+        table.integer('usuario_id').unsigned().notNullable();
+        table.integer('bandeira_id').unsigned().notNullable();
         table.foreign('usuario_id').references('id').inTable('usuarios').onDelete('CASCADE').onUpdate('CASCADE');
         table.foreign('bandeira_id').references('id').inTable('bandeira').onUpdate('CASCADE');
       })

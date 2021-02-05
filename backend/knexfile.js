@@ -1,15 +1,14 @@
 // Update with your config settings.
-require('dotenv').config();
+
 module.exports = {
 
   development: {
-    client: 'pg',
+    client: 'mysql',
     connection: {
-      host: 'localhost',
-      port:5432,
-      user: 'postgres',
-      database: 'financas',
-      password: process.env.DB_PASSWORD,
+      host : '127.0.0.1',
+      user : 'root',
+      password : '',
+      database : 'financas'
     },
     migrations: {
       directory: './src/database/migrations'

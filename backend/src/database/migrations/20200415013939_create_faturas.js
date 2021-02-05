@@ -4,9 +4,9 @@ exports.up = function(knex) {
         table.integer('ano').notNullable();
         table.decimal('valor').notNullable();
 
-        table.integer('cartao_id').notNullable();
-        table.integer('mes_id').notNullable();
-        table.integer('compras_id').notNullable();
+        table.integer('cartao_id').unsigned().notNullable();
+        table.integer('mes_id').unsigned().notNullable();
+        table.integer('compras_id').unsigned().notNullable();
         table.boolean('paga').notNullable();
         table.integer('fechamento');
         table.integer('vencimento');

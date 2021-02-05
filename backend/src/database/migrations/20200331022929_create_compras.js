@@ -7,9 +7,9 @@ exports.up = function(knex) {
         table.integer('numParcelas').notNullable();
         table.decimal('valorParcelas').notNullable();
 
-        table.string('usuario_id').notNullable();
-        table.integer('loja_id').notNullable();
-        table.integer('cartao_id').notNullable();
+        table.integer('usuario_id').unsigned().notNullable();
+        table.integer('loja_id').unsigned().notNullable();
+        table.integer('cartao_id').unsigned().notNullable();
 
         table.foreign('usuario_id').references('id').inTable('usuarios').onDelete('CASCADE').onUpdate('CASCADE');
         table.foreign('loja_id').references('id').inTable('lojas');

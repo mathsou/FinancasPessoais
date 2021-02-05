@@ -5,7 +5,7 @@ exports.up = function(knex) {
         table.decimal('porcentagem').notNullable();
 
 
-        table.string('usuario_id').notNullable();
+        table.integer('usuario_id').unsigned().notNullable();
         table.foreign('usuario_id').references('id').inTable('usuarios').onDelete('CASCADE').onUpdate('CASCADE');
       })
 };
