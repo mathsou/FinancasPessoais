@@ -31,7 +31,6 @@ routes.get('/meses', mesesController.index);
 routes.use(authMiddleware);
 
 routes.get('/autenticacao', autenticacaoController.token);
-
 routes.get('/usuarios', usuarioController.index);
 routes.get('/cartoes', cartaoController.index);
 routes.get('/admin', adminController.index);
